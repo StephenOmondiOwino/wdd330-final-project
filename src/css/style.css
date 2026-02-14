@@ -13,3 +13,85 @@ header, footer {
   padding: 1rem;
   text-align: center;
 }
+.search {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.search input {
+  padding: 0.5rem;
+  width: 60%;
+  max-width: 300px;
+}
+
+.search button {
+  padding: 0.5rem 1rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.results .movie {
+  background: white;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+.results .movie img {
+  width: 100%;
+  border-radius: 5px;
+}
+.results .movie h3 {
+  font-size: 1rem;
+  margin: 0.5rem 0 0;
+}
+.results .movie p {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0.5rem 0 0;
+}
+.results .movie a {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #007BFF;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+.results .movie a:hover {
+  background: #0056b3;
+}
+.movie-card {
+  background: #111;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.movie-card img {
+  width: 100%;
+  border-radius: 6px;
+}
+.movie-card h3 {
+  margin: 0.5rem 0 0;
+}
+.movie-card p {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin: 0.5rem 0 0;
+}
+.movie-card a {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #007BFF;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
