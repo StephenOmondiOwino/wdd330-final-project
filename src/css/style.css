@@ -1,97 +1,221 @@
+:root {
+  --primary: #e50914;
+  --background: #121212;
+  --card: #1e1e1e;
+  --text: #09b93e;
+  --text-secondary: #140b0b;
+}
+
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
-  background: #f8f8f8;
-  color: #333;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  color: var(--text);
+}
+
+header {
+  background: var(--primary);
+  padding: 15px;
   text-align: center;
 }
 
-header, footer {
-  background: #222;
-  color: white;
-  padding: 1rem;
-  text-align: center;
+h1 {
+  margin: 0;
 }
+
+main {
+  padding: 20px;
+}
+
 .search {
-  margin: 1rem 0;
   text-align: center;
+  margin-bottom: 30px;
 }
 
-.search input {
-  padding: 0.5rem;
-  width: 60%;
-  max-width: 300px;
+input {
+  padding: 10px;
+  width: 250px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
 }
 
-.search button {
-  padding: 0.5rem 1rem;
-  margin-left: 0.5rem;
+button {
+  padding: 10px 15px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
+}
+
+button:hover {
+  background: #b20710;
 }
 
 .results {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
 }
-.results .movie {
-  background: white;
-  padding: 0.5rem;
-  border-radius: 5px;
+
+.movie {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  transition: transform 0.2s;
 }
-.results .movie img {
+
+.movie:hover {
+  transform: scale(1.05);
+}
+
+.movie img {
   width: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
 }
-.results .movie h3 {
-  font-size: 1rem;
-  margin: 0.5rem 0 0;
+
+.movie h3 {
+  font-size: 16px;
+  margin: 10px 0 5px;
 }
-.results .movie p {
-  font-size: 0.9rem;
-  color: #666;
-  margin: 0.5rem 0 0;
+
+.movie p {
+  font-size: 14px;
+  color: var(--text-secondary);
 }
-.results .movie a {
-  display: inline-block;
-  margin-top: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: #007BFF;
+
+footer {
+  text-align: center;
+  margin-top: 30px;
+  color: var(--text-secondary);
+}
+.hidden {
+  display: none;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  font-size: 18px;
+  margin: 20px;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
   color: white;
-  text-decoration: none;
-  border-radius: 5px;
-}
-.results .movie a:hover {
-  background: #0056b3;
-}
-.movie-card {
-  background: #111;
-  color: white;
-  padding: 0.5rem;
-  border-radius: 8px;
   text-align: center;
 }
 
-.movie-card img {
+.modal-content img {
   width: 100%;
-  border-radius: 6px;
+  border-radius: 10px;
 }
-.movie-card h3 {
-  margin: 0.5rem 0 0;
+
+#closeModal {
+  cursor: pointer;
+  float: right;
+  font-size: 24px;
 }
-.movie-card p {
-  font-size: 0.9rem;
-  color: #ccc;
-  margin: 0.5rem 0 0;
+/* Make layout flexible */
+main {
+  padding: 20px;
 }
-.movie-card a {
-  display: inline-block;
-  margin-top: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: #007BFF;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
+
+/* SEARCH SECTION */
+.search {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.search button {
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+/* MOVIE GRID */
+.results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+
+/* MOVIE CARD */
+.movie {
+  background: #f4f4f4;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.movie img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.movie button {
+  margin-top: 5px;
+  padding: 8px;
+  width: 100%;
+  cursor: pointer;
+}
+/* MOBILE DEVICES */
+@media (max-width: 600px) {
+
+  header h1 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .search {
+    flex-direction: column;
+  }
+
+  .search input {
+    width: 100%;
+  }
+
+  .search button {
+    width: 100%;
+  }
+
+  .results {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+/* DESKTOP */
+@media (min-width: 901px) {
+
+  .results {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
 }

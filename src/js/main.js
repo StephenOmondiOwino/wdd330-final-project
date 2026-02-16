@@ -1,59 +1,132 @@
-import { searchMovies } from './tmdbApi.js';
+import { searchMovies,} from "./tmdbApi.js";
 
-// Get DOM elements
-const searchInput = document.querySelector('#searchInput');
-const searchButton = document.querySelector('#searchBtn');
-const resultsContainer = document.querySelector('#results');
+import {
+  addToWatchlist,
+  getWatchlist,
+  removeFromWatchlist
+} from "./watchlist.js";
 
-// Function to render movie cards
-function renderMovies(movies) {
-  resultsContainer.innerHTML = ''; // clear previous results
 
-  if (!movies || movies.length === 0) {
-    resultsContainer.innerHTML = '<p>No movies found.</p>';
+
+const searchBtn = document.getElementById("searchBtn");
+const searchInput = document.getElementById("searchInput");
+const loading = document.getElementById("loading");
+
+
+// SEARCH MOVIES
+searchBtn.addEventListener("click", async () => {
+
+  const query = searchInput.value;
+
+  if (!query) return;
+
+  loading.classList.remove("hidden");
+
+  const movies = await searchMovies(query);
+
+  loading.classList.add("hidden");
+
+  displayResults(movies);
+
+});
+
+
+// SEARCH WHEN PRESS ENTER
+searchInput.addEventListener("keypress", function(e) {
+
+  if (e.key === "Enter") {
+
+    searchBtn.click();
+
+  }
+
+});
+
+
+// DISPLAY SEARCH RESULTS
+function displayResults(movies) {
+
+  const resultsDiv = document.getElementById("results");
+
+  resultsDiv.innerHTML = "";
+
+  if (movies.length === 0) {
+
+    resultsDiv.innerHTML = "<p>No movies found</p>";
+
     return;
+
   }
 
   movies.forEach(movie => {
-    const poster = movie.poster_path
-      ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-      : 'https://via.placeholder.com/200x300?text=No+Image';
 
-    const movieCard = document.createElement('div');
-    movieCard.classList.add('movie-card');
-    movieCard.innerHTML = `
-      <img src="${poster}" alt="${movie.title}" />
+    const poster = movie.poster_path
+      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+      : "https://via.placeholder.com/300x450?text=No+Image";
+
+    const div = document.createElement("div");
+
+    div.classList.add("movie");
+
+    div.innerHTML = `
+      <img src="${poster}">
       <h3>${movie.title}</h3>
-      <p>Release: ${movie.release_date || 'N/A'}</p>
-      <p>Rating: ${movie.vote_average || 'N/A'}</p>
+      <p>${movie.release_date || "No date"}</p>
+      <button>Add to Watchlist</button>
     `;
 
-    resultsContainer.appendChild(movieCard);
+    // ADD TO WATCHLIST
+    div.querySelector("button").addEventListener("click", () => {
+
+      addToWatchlist(movie);
+
+      displayWatchlist();
+
+    });
+
+    resultsDiv.appendChild(div);
+
   });
+
 }
 
-// Function to handle search
-async function handleSearch() {
-  const query = searchInput.value.trim();
-  if (!query) return;
 
-  resultsContainer.innerHTML = '<p>Loading...</p>';
-  try {
-    const movies = await searchMovies(query);
-    renderMovies(movies);
-  } catch (err) {
-    resultsContainer.innerHTML = `<p>Error: ${err.message}</p>`;
-  }
+// DISPLAY WATCHLIST
+function displayWatchlist() {
+
+  const watchlistDiv = document.getElementById("watchlist");
+
+  if (!watchlistDiv) return;
+
+  const watchlist = getWatchlist();
+
+  watchlistDiv.innerHTML = "";
+
+  watchlist.forEach(movie => {
+
+    const div = document.createElement("div");
+
+    div.classList.add("movie");
+
+    div.innerHTML = `
+      <h3>${movie.title}</h3>
+      <button>Remove</button>
+    `;
+
+    div.querySelector("button").addEventListener("click", () => {
+
+      removeFromWatchlist(movie.id);
+
+      displayWatchlist();
+
+    });
+
+    watchlistDiv.appendChild(div);
+
+  });
+
 }
 
-// Event listener
-searchButton.addEventListener('click', handleSearch);
 
-// Optional: allow Enter key to search
-searchInput.addEventListener('keypress', e => {
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    handleSearch();
-  }
-});
-
+// INITIAL LOAD WATCHLIST
+displayWatchlist();

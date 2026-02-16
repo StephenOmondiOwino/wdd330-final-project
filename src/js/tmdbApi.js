@@ -12,4 +12,19 @@ export async function searchMovies(query) {
   const data = await response.json();
   return data.results;
 }
+//GET MOVIE TRAILER
+export async function getMovieTrailer(movieId) {
 
+  const url = `${BASE_URL}/movie/${movieId}/videos?api_key=${API_KEY}`;
+
+  const response = await fetch(url);
+
+  const data = await response.json();
+
+  const trailer = data.results.find(
+    video => video.type === "Trailer" && video.site === "YouTube"
+  );
+
+  return trailer ? trailer.key : null;
+
+}
